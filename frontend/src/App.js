@@ -6,8 +6,8 @@ import './App.css';
 function App() {
 
   const [addingRecipe,setAddingRecipe] = useState(false);
-
   const [dishes,setDishes] = useState([]);
+  const [error,setError] = useState(false);
 
   const getDishes = () => {
     fetch('http://localhost:5000/dishes')
@@ -38,10 +38,15 @@ function App() {
   }
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter'){
+
+    let obj = dishes.find(dish => dish.recipeName === e.target.value);
+    const index = dishes.indexOf(obj);
+
+    if (index === -1 && e.key === 'Enter'){
       addDish(e.target.value);
       setAddingRecipe(false);
     }
+    else if(index !== -1) setAddingRecipe(false);
       
   }
 

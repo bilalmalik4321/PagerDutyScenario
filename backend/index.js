@@ -40,20 +40,6 @@ app.get('/dishes', (req, res) => {
 //POST on /inventory with the correct body format, will result in a newly created
 //inventory item, that is returned back as response
 app.post("/dishes", async (req, res)=>{
-    // const inventory = new Dish({
-    //     recipeName: req.body.recipeName
-    // }); 
-
-    // try{
-    //     //get returned inventory back, give as response for successful creation
-    //     const savedInventory = await inventory.save();
-    //     //if successful give 200 response
-    //     res.status(200).json(savedInventory);
-    // }
-    // catch(err){
-    //     //send error response
-    //     res.status(500).json({message: "Internal server error:"+err});
-    // }
 
     try{
         dishes.push({recipeName: req.body.recipeName});
@@ -67,8 +53,6 @@ app.post("/dishes", async (req, res)=>{
 
 //DELETE removes the specific inventory item
 app.delete("/dishes", async (req, res)=>{
-
-    console.log(req.body.recipeName);
 
     let obj = dishes.find(dish => dish.recipeName === req.body.recipeName);
     const index = dishes.indexOf(obj);
@@ -84,17 +68,6 @@ app.delete("/dishes", async (req, res)=>{
     catch(err){
         res.status(500).json({message: "Internal server error:"+err});
     }
-
-    // try{
-    //     //get returned inventory back, give as response for successful deletion
-    //     const removedInventory = await Inventory.deleteOne({_id: req.params.inventoryId});
-    //     //if successful give 200 response
-    //     res.status(200).json(removedInventory);
-    // }
-    // catch(err){
-    //     //send error response
-    //     res.status(500).json({message: "Internal server error:"+err});
-    // }
 
 })
 
