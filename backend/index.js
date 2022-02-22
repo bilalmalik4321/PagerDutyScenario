@@ -6,7 +6,9 @@ const port = 5000;
 
 //Imports
 //for db connection, to mongo
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
+
+
 //import cors libaray
 const cors = require('cors');
 //require body parser to read in content from body of request
@@ -23,12 +25,16 @@ app.use(bodyParser.json());
 
 const dishes = [
     {
-        recipeName: "Shawarma"
+        dishID: 0,
+        recipeName: "Shawarma",
+
     },{
-        recipeName: "Biryani"
+        dishID: 1,
+        recipeName: "Biryani",
     },
     {
-        recipeName: "Turkish Kebab" 
+        dishID: 2,
+        recipeName: "Turkish Kebab" ,
     }
   ];
 
@@ -41,12 +47,17 @@ app.get('/dishes', (req, res) => {
 //inventory item, that is returned back as response
 app.post("/dishes", async (req, res)=>{
 
-    let obj = dishes.find(dish => dish.recipeName === req.body.recipeName);
+    let maxID = 0;
+
+    let obj = dishes.find(dish => {
+        dish.recipeName === req.body.recipeName;
+        if(maxID === dish.dishID) maxID++;
+    });
     const index = dishes.indexOf(obj);
 
     try{
         if(index < 0){
-            dishes.push({recipeName: req.body.recipeName});
+            dishes.splice(maxID, 0, {...req.body, dishID: maxID});
             res.status(201).json({message: "Successfully created dish!"});
         }
         else res.status(400).json({message: "Dish already exists."});
@@ -60,7 +71,8 @@ app.post("/dishes", async (req, res)=>{
 //DELETE removes the specific inventory item
 app.delete("/dishes", async (req, res)=>{
 
-    let obj = dishes.find(dish => dish.recipeName === req.body.recipeName);
+
+    let obj = dishes.find(dish => dish.dishID === req.body.dishID);
     const index = dishes.indexOf(obj);
 
     try{

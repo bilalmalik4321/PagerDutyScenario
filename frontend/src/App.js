@@ -67,10 +67,10 @@ function App() {
         </div>
         <div className="body-section">
           { addingRecipe &&
-          <div className="input-holder">
-            <>New Recipe Name:</>
-            <input onKeyDown={(e) => handleKeyDown(e)}></input>
-          </div>
+            <div className="input-holder">
+              <>New Recipe Name:</>
+              <input onKeyDown={(e) => handleKeyDown(e)}></input>
+            </div>
           }
           {dishes.map((recipe,index) => 
             <Recipe recipe={recipe} getDishes={getDishes} key={index}/>        
