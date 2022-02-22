@@ -4,7 +4,7 @@ import cancelIcon from "../assets/images/cancel.svg";
 import editIcon from "../assets/images/edit.svg";
 
 
-export const Recipe = (props) => {
+export const Recipe = ({recipe, getDishes}) => {
 
     const [editing,setEditing] = useState(false);
 
@@ -23,7 +23,7 @@ export const Recipe = (props) => {
         })  
         .then(data => {
             console.log(data);
-            props.getDishes();
+            getDishes();
         });
     }
 
@@ -34,15 +34,15 @@ export const Recipe = (props) => {
             ):(
             <>
                 <h4>
-                    {props.recipe.recipeName}
+                    {recipe.recipeName}
                 </h4>
-                {props.recipe.halal && <h6 style={{ backgroundColor: "#d6f5d6", color: "#196619", borderRadius: 5 }}>Halal</h6>}
-                {props.recipe.kosher && <h6 style={{ backgroundColor: "#b3d1ff", color: "#002966", borderRadius: 5 }}>Kosher</h6>}
-                {props.recipe.vegan && <h6 style={{ backgroundColor: "#ffd699", color: "#995c00", borderRadius: 5 }}>Vegan Friendly</h6>}
+                {recipe.halal && <h6 style={{ backgroundColor: "#d6f5d6", color: "#196619", borderRadius: 5 }}>Halal</h6>}
+                {recipe.kosher && <h6 style={{ backgroundColor: "#b3d1ff", color: "#002966", borderRadius: 5 }}>Kosher</h6>}
+                {recipe.vegan && <h6 style={{ backgroundColor: "#ffd699", color: "#995c00", borderRadius: 5 }}>Vegan Friendly</h6>}
             </>
             )
             }
-            <div className="delete-recipe" onClick={()=>deleteDish(props.recipe.dishID)}>
+            <div className="delete-recipe" onClick={()=>deleteDish(recipe.dishID)}>
                 <img src={cancelIcon} style={{ height: 20, width: 20 }} className="cancel" alt="cancel"/>
             </div>
             {/* <img src={editIcon} onClick={()=>setEditing(!editing)} style={{ height: 20, width: 20 }} className="App-logo" alt="logo"/> */}
