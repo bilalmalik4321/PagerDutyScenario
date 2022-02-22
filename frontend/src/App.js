@@ -42,11 +42,11 @@ function App() {
     let obj = dishes.find(dish => dish.recipeName === e.target.value);
     const index = dishes.indexOf(obj);
 
-    if (index === -1 && e.key === 'Enter'){
+    if (index === -1 && e.key === 'Enter' && e.target.value!==''){
       addDish(e.target.value);
       setAddingRecipe(false);
     }
-    else if(index !== -1) setAddingRecipe(false);
+    else if(e.key === 'Enter') setAddingRecipe(false);
       
   }
 

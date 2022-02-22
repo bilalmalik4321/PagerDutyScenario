@@ -41,9 +41,15 @@ app.get('/dishes', (req, res) => {
 //inventory item, that is returned back as response
 app.post("/dishes", async (req, res)=>{
 
+    let obj = dishes.find(dish => dish.recipeName === req.body.recipeName);
+    const index = dishes.indexOf(obj);
+
     try{
-        dishes.push({recipeName: req.body.recipeName});
-        res.status(201).json({message: "Successfully created dish!"});
+        if(index < 0){
+            dishes.push({recipeName: req.body.recipeName});
+            res.status(201).json({message: "Successfully created dish!"});
+        }
+        else res.status(400).json({message: "Dish already exists."});
     }
     catch(err){
         res.status(500).json({message: "Internal server error:"+err});
@@ -61,7 +67,7 @@ app.delete("/dishes", async (req, res)=>{
         if (index > -1) {
             dishes.splice(index, 1); // 2nd parameter means remove one item only
         }
-        else res.status(500).json({message: "A recipe name that doesnt exist was provided: "+err});
+        else res.status(400).json({message: "A recipe name that doesnt exist was provided."});
 
         res.status(202).json({message: "Successfully deleted dish!"});
     }
